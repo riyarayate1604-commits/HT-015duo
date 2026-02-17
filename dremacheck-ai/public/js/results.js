@@ -49,3 +49,15 @@ class ResultsHandler {
 // Example usage (in another file or script):
 // const handler = new ResultsHandler('results-container');
 // handler.displayResults([{ name: 'File1', status: 'Clean', details: 'No issues' }]);
+// Load result from localStorage
+const data = localStorage.getItem("analysisResult");
+
+if (data) {
+  const result = JSON.parse(data);
+
+  document.getElementById("risk").textContent = result.risk;
+  document.getElementById("explanation").textContent = result.explanation;
+  document.getElementById("recommendation").textContent = result.recommendation;
+} else {
+  document.body.innerHTML += "<p>No analysis result found. Please scan again.</p>";
+}
