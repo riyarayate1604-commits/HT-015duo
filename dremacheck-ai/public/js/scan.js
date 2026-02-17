@@ -19,4 +19,32 @@ function scanTarget(target) {
     });
 }
 
+
 // Usage: performScan(['file1.txt', 'file2.txt']).then(console.log);
+// Handle analyze button
+analyzeBtn.addEventListener('click', async () => {
+  if (!capturedImageData) {
+    alert("Please upload or capture an image first.");
+    return;
+  }
+
+  loading.style.display = "block";
+
+  try {
+    const response = await fetch('/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ image: capturedImageData })
+    });
+
+    const result = await response.json();
+    localStorage.setItem("analysisResult", JSON.stringify(result));
+    window.location.href = "results.html";
+
+  } catch (error) {
+    alert("Error analyzing image.");
+  }
+
+  loading.style.display = "none";
+});
+
